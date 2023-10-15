@@ -8,6 +8,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(null)
   const navigate = useNavigate()
 
+  const url = 'http://localhost:5000/api/v1/user/signup'
+
   const handleChange = async (e) => {
     setFormData({
       ...formData,
@@ -19,23 +21,18 @@ const SignUp = () => {
     e.preventDefault();
     try {
     setLoading(true)
-    const res = await axios.post('http://localhost:5000/api/v1/user/signup', formData, {
+      const res = await axios.post(url, formData, {
     headers: {
     'Content-Type': 'application/json'
     },
     })
-      console.log(res)
-    if (res.data.status === "Failed") {
-      setLoading(false)
-      setError(data.message);
-      return
-    }
+    
       setLoading(false)
       setError(null)
       navigate('/sign-in')
     } catch (error) {
       setLoading(false);
-      setError(error.message)
+      setError(error.response.data.message)
     }
     
   }
@@ -45,19 +42,19 @@ const SignUp = () => {
       <form className='flex flex-col gap-4'
         onSubmit={handleSubmit}
       >
-        <input type="text" placeholder='username'
+        <input type="text" placeholder='Username'
           className='border p-3 rounded-lg focus:outline-none' id='username'
           onChange={handleChange}
         />
-        <input type="email" placeholder='email'
+        <input type="email" placeholder='Email'
           className='border p-3 rounded-lg focus:outline-none' id='email'
           onChange={handleChange}
         />
-        <input type="password" placeholder='password'
+        <input type="password" placeholder='Password'
           className='border p-3 rounded-lg focus:outline-none' id='password'
           onChange={handleChange}
         />
-        <input type="password" placeholder='confirm password'
+        <input type="password" placeholder='Confirm password'
           className='border p-3 rounded-lg focus:outline-none' id='confirmPassword'
           onChange={handleChange}
         />
