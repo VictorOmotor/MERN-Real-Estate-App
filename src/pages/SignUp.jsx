@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import OAuth from '../components/OAuth'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({})
@@ -63,6 +64,7 @@ const SignUp = () => {
         disabled:opacity-50'>
           {loading ? 'Loading' : 'Sign Up'}
         </button>
+        <OAuth />
         
       </form>
       {error && <p className='text-red-500 mt-4'>{error}</p>}

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice'
+import OAuth from '../components/OAuth'
 
 const SignIn = () => {
   const [formData, setFormData] = useState({})
@@ -56,6 +57,7 @@ const SignIn = () => {
         disabled:opacity-50'>
           {loading ? 'Loading' : 'Sign In'}
         </button>
+        <OAuth /> 
         
       </form>
       {error && <p className='text-red-500 mt-4'>{error}</p>}
