@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux' 
 import { useState, useRef, useEffect } from 'react'
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice'
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
 
@@ -15,6 +15,7 @@ const Profile = () => {
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
   const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
+  const deleteUrl = `http://localhost:5000/api/v1/user/deleteuser/${currentUser.data.userData._id}`
   const [updateSuccess, SetUpdateSuccess] = useState(false)
   const token = currentUser.data.userData.accessToken
 
@@ -43,6 +44,22 @@ const Profile = () => {
       dispatch(updateUserFailure(error.response.data.message))
     }
     
+  }
+
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(deleteUserStart())
+      const response = await axios.delete(deleteUrl, {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+      },
+      })
+      dispatch(deleteUserSuccess(response))
+    } catch (error) {
+      dispatch(deleteUserFailure(error.response.data.message))
+    }
   }
       // Firebase storage
       // allow read;
@@ -130,7 +147,7 @@ const Profile = () => {
       <p className='text-red-500 mt-4'>{error ? error : ''}</p>
       <p className='text-green-500 mt-4'>{updateSuccess ? 'Profile updated successfully!' : ''}</p>
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete account</span>
+        <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
         <span className='text-green-700 cursor-pointer'>Sign out</span>
         
       </div>

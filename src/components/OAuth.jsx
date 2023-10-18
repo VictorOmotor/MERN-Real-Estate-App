@@ -18,13 +18,13 @@ const OAuth = () => {
                 username: result.user.displayName,
                 email: result.user.email,
                 photo: result.user.photoURL,
-                accessToken: result.user.accessToken
             }, {
                 headers: {
                 'Content-Type': 'application/json'
                 }
                 
-        })
+            })
+            
         dispatch(signInSuccess(response))
         navigate('/')
         
