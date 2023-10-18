@@ -60,7 +60,7 @@ const SignIn = () => {
         <OAuth /> 
         
       </form>
-      {error && <p className='text-red-500 mt-4'>{error}</p>}
+      <p className='text-red-500 mt-4'>{error ? error : ''}</p>
       <div className='flex gap-2 mt-5'>
         <p>Yet to have an account? </p>
         <Link to='/sign-up'>

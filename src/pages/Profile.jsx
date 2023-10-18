@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux' 
 import { useState, useRef, useEffect } from 'react'
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from '../redux/user/userSlice'
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutStart, signOutSuccess, signOutFailure } from '../redux/user/userSlice'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user)
@@ -16,8 +17,11 @@ const Profile = () => {
   const [fileUploadError, setFileUploadError] = useState(false)
   const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
   const deleteUrl = `http://localhost:5000/api/v1/user/deleteuser/${currentUser.data.userData._id}`
+  const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
+  // const [signOut, setSignOut] = useState(false)
   const token = currentUser.data.userData.accessToken
+  const navigate = useNavigate()
 
 
   const handleChange = async (e) => {
@@ -41,6 +45,9 @@ const Profile = () => {
       dispatch(updateUserSuccess(response))
       SetUpdateSuccess(true)
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate('/sign-in')
+      }
       dispatch(updateUserFailure(error.response.data.message))
     }
     
@@ -49,16 +56,39 @@ const Profile = () => {
   const handleDeleteUser = async (e) => {
     e.preventDefault();
     try {
-      dispatch(deleteUserStart())
+      // dispatch(deleteUserStart())
       const response = await axios.delete(deleteUrl, {
       headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
       },
       })
-      dispatch(deleteUserSuccess(response))
+      
+      // dispatch(deleteUserSuccess(response))
+      navigate('/sign-in')
     } catch (error) {
+      // navigate('/sign-in')
       dispatch(deleteUserFailure(error.response.data.message))
+    }
+  }
+
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+    try {
+      // dispatch(signOutStart())
+      const response = await axios.get(signOutUrl, {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+      },
+      })
+      navigate('/sign-in')
+      // dispatch(signOutSuccess(response))
+      
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate('/sign-in')
+      }
     }
   }
       // Firebase storage
@@ -148,7 +178,7 @@ const Profile = () => {
       <p className='text-green-500 mt-4'>{updateSuccess ? 'Profile updated successfully!' : ''}</p>
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
-        <span className='text-green-700 cursor-pointer'>Sign out</span>
+        <span onClick={handleSignOut} className='text-green-700 cursor-pointer'>Sign out</span>
         
       </div>
       
