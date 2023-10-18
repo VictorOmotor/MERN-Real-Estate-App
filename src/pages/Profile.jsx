@@ -15,6 +15,7 @@ const Profile = () => {
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
   const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
+  const [updateSuccess, SetUpdateSuccess] = useState(false)
   const token = currentUser.data.userData.accessToken
 
 
@@ -36,7 +37,8 @@ const Profile = () => {
     },
     })
       
-    dispatch(updateUserSuccess(response))
+      dispatch(updateUserSuccess(response))
+      SetUpdateSuccess(true)
     } catch (error) {
       dispatch(updateUserFailure(error.response.data.message))
     }
@@ -125,8 +127,8 @@ const Profile = () => {
           {loading ? 'Updating...' : 'Update'}
         </button>
       </form>
-      {error && <p className='text-red-500 mt-4'>{error}</p>}
-      {/* {updateUserSuccess && <p className='text-green-500 mt-4'>{'Info updated successfully'}</p>} */}
+      <p className='text-red-500 mt-4'>{error ? error : ''}</p>
+      <p className='text-green-500 mt-4'>{updateSuccess ? 'Profile updated successfully!' : ''}</p>
       <div className='flex justify-between mt-5'>
         <span className='text-red-700 cursor-pointer'>Delete account</span>
         <span className='text-green-700 cursor-pointer'>Sign out</span>
