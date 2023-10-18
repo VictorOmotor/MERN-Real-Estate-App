@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux' 
 import { useState, useRef, useEffect } from 'react'
-import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice'
+import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
 
@@ -14,6 +14,8 @@ const Profile = () => {
   const fileRef = useRef(null)
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
+  const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
+  const token = currentUser.data.userData.accessToken
 
 
   const handleChange = async (e) => {
@@ -26,17 +28,17 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    dispatch(signInStart())
+    dispatch(updateUserStart())
       const response = await axios.put(url, formData, {
     headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
     },
     })
       
-    
-      dispatch(signInSuccess(response))
+    dispatch(updateUserSuccess(response))
     } catch (error) {
-      dispatch(signInFailure(error.response.data.message))
+      dispatch(updateUserFailure(error.response.data.message))
     }
     
   }
@@ -89,7 +91,7 @@ const Profile = () => {
         />
         <img onClick={() => fileRef.current.click()}
           className='rounded-full h-28 w-28 object-cover cursor-pointer self-center mt-2'
-          src={formData.photo || currentUser.data.rest.photo} alt='profile-photo' />
+          src={formData.photo || currentUser.data.userData.photo} alt='profile-photo' />
         <p className='text-sm self-center'>
         {fileUploadError ? (
         <span className='text-red7-700'>Error image upload (File must be less than 10MB)</span>
@@ -104,10 +106,12 @@ const Profile = () => {
         )}
         </p>
         <input type="text" placeholder='Username'
+          defaultValue={currentUser.data.userData.username}
           className='border p-3 rounded-lg focus:outline-none' id='username'
           onChange={handleChange}
         />
         <input type="email" placeholder='Email'
+          defaultValue={currentUser.data.userData.email}
           className='border p-3 rounded-lg focus:outline-none' id='email'
           onChange={handleChange}
         />
@@ -121,6 +125,8 @@ const Profile = () => {
           {loading ? 'Updating...' : 'Update'}
         </button>
       </form>
+      {error && <p className='text-red-500 mt-4'>{error}</p>}
+      {/* {updateUserSuccess && <p className='text-green-500 mt-4'>{'Info updated successfully'}</p>} */}
       <div className='flex justify-between mt-5'>
         <span className='text-red-700 cursor-pointer'>Delete account</span>
         <span className='text-green-700 cursor-pointer'>Sign out</span>
