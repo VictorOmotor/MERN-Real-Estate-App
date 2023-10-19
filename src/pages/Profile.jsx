@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutStart, signOutSuccess, signOutFailure } from '../redux/user/userSlice'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.user)
@@ -173,6 +173,10 @@ const Profile = () => {
         disabled:opacity-50'>
           {loading ? 'Updating...' : 'Update'}
         </button>
+        <Link className='bg-green-700 text-white p-3
+        rounded-lg uppercase hover:opacity-80 text-center' to={'/create-listing'}>
+          Create Listing
+        </Link>
       </form>
       <p className='text-red-500 mt-4'>{error ? error : ''}</p>
       <p className='text-green-500 mt-4'>{updateSuccess ? 'Profile updated successfully!' : ''}</p>
