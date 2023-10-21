@@ -10,6 +10,7 @@ const Profile = () => {
   const { currentUser } = useSelector((state) => state.user)
   const [formData, setFormData] = useState({})
   const [file, setFile] = useState(undefined)
+  const [showListingsError, setShowListingsError] = useState(false)
   const { loading, error } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const fileRef = useRef(null)
@@ -17,13 +18,15 @@ const Profile = () => {
   const [fileUploadError, setFileUploadError] = useState(false)
   const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
   const deleteUrl = `http://localhost:5000/api/v1/user/deleteuser/${currentUser.data.userData._id}`
+  const getListingsUrl = `http://localhost:5000/api/v1/listing/listings/${currentUser.data.userData._id}`
   const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
+  const [showUserListings, setShowUserListings] = useState([])
   // const [signOut, setSignOut] = useState(false)
   const token = currentUser.data.userData.accessToken
+  const userRef = currentUser.data.userData._id
   const navigate = useNavigate()
-
-
+  
   const handleChange = async (e) => {
     setFormData({
       ...formData,
@@ -124,7 +127,24 @@ const Profile = () => {
       })
       }
     )
-  } 
+  }
+
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false)
+       const response = await axios.get(getListingsUrl, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+            })
+      setShowListingsError(false)
+      setShowUserListings(response)
+    } catch (error) {
+      setShowListingsError(true)
+    }
+  }
+
 
   return (
     <div className='p-3 max-w-lg mx-auto' >
@@ -185,7 +205,33 @@ const Profile = () => {
         <span onClick={handleSignOut} className='text-green-700 cursor-pointer'>Sign out</span>
         
       </div>
-      
+      <button onClick={handleShowListings} className='text-green-700 w-full'>Show listings</button>
+      <p className='text-red-500 mt-4'>{showListingsError ? 'Error showing listings' : ''}</p>
+      {
+        showUserListings && showUserListings.data && showUserListings.data.listings &&
+        showUserListings.data.listings.length > 0 &&
+        <div className='flex flex-col gap-4'>
+          <h1 className='text-center mt-2 text-2xl font-semibold'>Your listings </h1>
+        {showUserListings.data.listings.map((listing) => (
+          <div key={listing._id} className='border rounded-lg p-3
+          flex justify-between items-center gap-4'>
+            <Link to={`/listing/${listing._id}`}>
+              <img src={listing.imageUrls[0]} alt="image-cover"
+              className='h-16 w-16 '/>
+            </Link>
+            <Link className='text-slate-700 font-semibold 
+              flex-1 hover:underline truncate' to={`/listing/${listing._id}`}>
+              <p>{listing.name}</p>
+            </Link>
+            <div className='flex flex-col items-center'>
+              <button className='text-red-700 uppercase'>Delete</button>
+              <button className='text-green-700 uppercase'>Edit</button>
+            </div>
+          </div>
+          
+            ))}
+          </div>
+      }
     </div>
   )
 }
