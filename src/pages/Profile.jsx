@@ -133,17 +133,39 @@ const Profile = () => {
     try {
       setShowListingsError(false)
        const response = await axios.get(getListingsUrl, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-            })
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+      })
       setShowListingsError(false)
       setShowUserListings(response)
     } catch (error) {
       setShowListingsError(true)
     }
   }
+
+  const handleDeleteListing = async (listingId) => {
+  try {
+    await axios.delete(`http://localhost:5000/api/v1/listing/delete/${listingId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+    });
+    // Update the showUserListings state correctly by filtering the listings
+    setShowUserListings((prev) => ({
+      ...prev,
+      data: {
+        ...prev.data,
+        listings: prev.data.listings.filter((listing) => listing._id !== listingId),
+      },
+    }));
+  } catch (error) {
+    
+  }
+};
+
 
 
   return (
@@ -224,7 +246,7 @@ const Profile = () => {
               <p>{listing.name}</p>
             </Link>
             <div className='flex flex-col items-center'>
-              <button className='text-red-700 uppercase'>Delete</button>
+              <button onClick={() => handleDeleteListing(listing._id)} className='text-red-700 uppercase'>Delete</button>
               <button className='text-green-700 uppercase'>Edit</button>
             </div>
           </div>
