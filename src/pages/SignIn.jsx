@@ -13,7 +13,7 @@ const SignIn = () => {
 
   const url = 'http://localhost:5000/api/v1/user/signin'
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
@@ -52,7 +52,7 @@ const SignIn = () => {
           onChange={handleChange}
         />
         
-        <button disabled={loading} className='bg-slate-700 text-white p-3
+        <button type="submit" disabled={loading} className='bg-slate-700 text-white p-3
         rounded-lg uppercase hover:opacity-80
         disabled:opacity-50'>
           {loading ? 'Loading' : 'Sign In'}

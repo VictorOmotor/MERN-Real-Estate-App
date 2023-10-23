@@ -132,7 +132,6 @@ const UpdateListing = () => {
                     Authorization: `Bearer ${token}`
                 },
             })
-            console.log(response)
             setLoading(false)
             navigate(`/listing/${response.data.updatedListing._id}`)
         } catch (error) {
