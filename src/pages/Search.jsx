@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ListingItem from '../components/ListingItem'
 
 const Search = () => {
   const [sideBarData, setSideBarData] = useState({
@@ -219,6 +220,18 @@ const Search = () => {
         >
           Listing results:
         </h1>
+        <div className="flex-1">
+            {!loading && listings.length === 0 && (
+                <p className='text-xl text-slate-700 p-7'>No listing found</p>
+            )}
+            {loading && (
+                <p className='text-xl text-slate-700 text-center w-full'>No listing found</p>
+            )}
+            {!loading && listings && listings.map((listing) => (
+                <ListingItem key={listing._id} listing={listing} />
+            )
+            )}
+        </div>
       </div>
     </div>
   )

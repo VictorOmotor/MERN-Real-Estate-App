@@ -116,7 +116,7 @@ const Listing = () => {
                   className="bg-green-900 w-full max-w-[100px] text-white
                 text-center p-1 rounded-md items-center"
                 >
-                  ${+listing.regularPrice - +listing.discountPrice}
+                  ${+listing.regularPrice - +listing.discountPrice} discount
                 </p>
               )}
             </div>
@@ -138,7 +138,7 @@ const Listing = () => {
                 <FaBath className="text-lg" />
                 {listing.bathrooms > 1
                   ? `${listing.bathrooms} baths `
-                  : `${listing.athrooms} bath `}
+                  : `${listing.bathrooms} bath `}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaParking className="text-lg" />
