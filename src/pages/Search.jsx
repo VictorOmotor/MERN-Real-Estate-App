@@ -16,6 +16,8 @@ const Search = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [listings, setListings] = useState([])
+  const [showMore, setShowMore] = useState(false)
+  
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search)
@@ -49,10 +51,16 @@ const Search = () => {
 
     const fetchListings = async () => {
       setLoading(true)
+      setShowMore(false)
       const searchQuery = urlParams.toString()
       const response = await axios.get(
         `http://localhost:5000/api/v1/listing/get?${searchQuery}`,
       )
+      if (response.data.listings.length > 9) {
+          setShowMore(true)
+      } else {
+          setShowMore(false)
+        }
       setListings(response.data.listings)
       setLoading(false)
     }
@@ -106,6 +114,19 @@ const Search = () => {
     urlParams.set('order', sideBarData.order)
     const searchQuery = urlParams.toString()
     navigate(`/search?${searchQuery}`)
+  }
+  
+    const handleShowMoreClick = async () => {
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings
+        const urlParams = new URLSearchParams(location.search)
+        urlParams.set('startIndex', startIndex)
+        const searchQuery = urlParams.toString();
+        const response = await axios.get(`http://localhost:5000/api/v1/listing/get?${searchQuery}`)
+        if (response.data.listings < 9) {
+            setShowMore(false)
+        }
+        setListings([...listings, ...response.data.listings])
   }
 
   return (
@@ -225,11 +246,18 @@ const Search = () => {
                 <p className='text-xl text-slate-700 p-7'>No listing found</p>
             )}
             {loading && (
-                <p className='text-xl text-slate-700 text-center w-full'>No listing found</p>
+                <p className='text-xl text-slate-700 text-center w-full'>Loading...</p>
             )}
             {!loading && listings && listings.map((listing) => (
                 <ListingItem key={listing._id} listing={listing} />
             )
+            )}
+            {showMore && (
+                <button 
+                onClick={{handleShowMoreClick}}
+                className='text-green-700 hover:underline p-7 text-center w-full'>
+                    Show more
+                </button>
             )}
         </div>
       </div>

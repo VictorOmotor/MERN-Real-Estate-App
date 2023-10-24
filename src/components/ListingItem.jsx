@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import {MdLocationOn} from 'react-icons/md'
 
 const ListingItem = ({ listing }) => {
-    console.log(listing)
+    
   return (
       <div className="bg-white shadow-md hover:shadow-lg
       tarnsition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]">
