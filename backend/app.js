@@ -8,6 +8,10 @@ import { globalErrorHandler } from './src/utils/errorHandler.js'
 import { config } from './src/config/index.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import path from 'path'
+
+
+const __dirname = path.resolve()
 
 const app = express()
 
@@ -31,6 +35,12 @@ app.use(cookieParser())
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/listing', listingRouter)
+
+app.use(express.static(path.join(__dirname, '/frontend/dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'front', 'dist', 'index.html'))
+})
 
 app.use(globalErrorHandler)
 
