@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "A real estate application",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start-dev": "set NODE_ENV=development && nodemon app.js",
