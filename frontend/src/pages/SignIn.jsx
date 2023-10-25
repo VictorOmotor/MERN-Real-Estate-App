@@ -15,7 +15,7 @@ const SignIn = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const url = 'http://localhost:5000/api/v1/user/signin'
+  const url = '/api/v1/user/signin'
 
   const handleChange = (e) => {
     setFormData({

@@ -10,7 +10,7 @@ const OAuth = () => {
   const navigate = useNavigate()
   const handleGoogleClick = async () => {
     try {
-      const url = 'http://localhost:5000/api/v1/auth/google'
+      const url = '/api/v1/auth/google'
       const provider = new GoogleAuthProvider()
       const auth = getAuth(app)
       const result = await signInWithPopup(auth, provider)

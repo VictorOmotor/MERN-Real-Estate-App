@@ -13,7 +13,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const token = currentUser?.data?.userData?.accessToken;
 
-  const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
+  const signOutUrl = '/api/v1/user/signout'
   
 
 

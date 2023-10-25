@@ -32,7 +32,7 @@ const Listing = () => {
       try {
         setLoading(true)
         const response = await axios.get(
-          `http://localhost:5000/api/v1/listing/get/${params.listingId}`,
+          `/api/v1/listing/get/${params.listingId}`,
         )
 
         setListing(response.data.listing)

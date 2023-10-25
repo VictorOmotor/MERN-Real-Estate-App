@@ -17,7 +17,7 @@ const Home = () => {
     const fetchOfferListings = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/listing/get?offer=true&limit=4`,
+          `/api/v1/listing/get?offer=true&limit=4`,
         )
 
         setOfferListings(response.data.listings)
@@ -30,7 +30,7 @@ const Home = () => {
     const fetchRentListings = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/listing/get?type=rent&limit=4`,
+          `/api/v1/listing/get?type=rent&limit=4`,
         )
 
         setRentListings(response.data.listings)
@@ -43,12 +43,12 @@ const Home = () => {
     const fetchSaleListings = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/v1/listing/get?type=sale&limit=4`,
+          `/api/v1/listing/get?type=sale&limit=4`,
         )
 
         setSaleListings(response.data.listings)
       } catch (error) {
-        console.log(error)
+        
       }
     }
 

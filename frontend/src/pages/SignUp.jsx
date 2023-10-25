@@ -9,7 +9,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(null)
   const navigate = useNavigate()
 
-  const url = 'http://localhost:5000/api/v1/user/signup'
+  const url = '/api/v1/user/signup'
 
   const handleChange = async (e) => {
     setFormData({
