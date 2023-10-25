@@ -17,7 +17,7 @@ const Home = () => {
     const fetchOfferListings = async () => {
       try {
         const response = await axios.get(
-          `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/get?offer=true&limit=4`,
+          `http://localhost:5000/api/v1/listing/get?offer=true&limit=4`,
         )
 
         setOfferListings(response.data.listings)

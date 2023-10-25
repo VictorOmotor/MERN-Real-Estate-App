@@ -53,7 +53,7 @@ const Search = () => {
       setShowMore(false)
       const searchQuery = urlParams.toString()
       const response = await axios.get(
-        `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/get?${searchQuery}`,
+        `http://localhost:5000/api/v1/listing/get?${searchQuery}`,
       )
       if (response.data.listings.length > 9) {
         setShowMore(true)
@@ -122,7 +122,7 @@ const Search = () => {
     urlParams.set('startIndex', startIndex)
     const searchQuery = urlParams.toString()
     const response = await axios.get(
-      `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/get?${searchQuery}`,
+      `http://localhost:5000/api/v1/listing/get?${searchQuery}`,
     )
     if (response.data.listings < 9) {
       setShowMore(false)

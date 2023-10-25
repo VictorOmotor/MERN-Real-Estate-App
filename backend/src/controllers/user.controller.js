@@ -22,7 +22,6 @@ export default class UserController {
       throw new BadUserRequestError(`An account with ${email} already exists.`)
     }
     const saltRounds = config.bycrypt_salt_round
-    ailToken = Math.floor(100000 + Math.random() * 900000).toString()
     const hashedPassword = bcrypt.hashSync(password, saltRounds)
     const user = new User({
       username,

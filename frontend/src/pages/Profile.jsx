@@ -31,10 +31,10 @@ const Profile = () => {
   const fileRef = useRef(null)
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
-  const url = `https://mern-real-estate-9wp2.onrender.com/api/v1/user/profile/${currentUser.data.userData._id}`
-  const deleteUrl = `https://mern-real-estate-9wp2.onrender.com/api/v1/user/deleteuser/${currentUser.data.userData._id}`
-  const getListingsUrl = `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/listings/${currentUser.data.userData._id}`
-  const signOutUrl = 'https://mern-real-estate-9wp2.onrender.com/api/v1/user/signout'
+  const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
+  const deleteUrl = `http://localhost:5000/api/v1/user/deleteuser/${currentUser.data.userData._id}`
+  const getListingsUrl = `http://localhost:5000/api/v1/listing/listings/${currentUser.data.userData._id}`
+  const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
   const [showUserListings, setShowUserListings] = useState([])
   // const [signOut, setSignOut] = useState(false)
@@ -73,7 +73,7 @@ const Profile = () => {
   const handleDeleteUser = async (e) => {
     e.preventDefault()
     try {
-      // dispatch(deleteUserStart())
+      dispatch(deleteUserStart())
       const response = await axios.delete(deleteUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -81,10 +81,10 @@ const Profile = () => {
         },
       })
 
-      // dispatch(deleteUserSuccess(response))
-      navigate('/sign-in')
+      dispatch(deleteUserSuccess(response))
+      
     } catch (error) {
-      // navigate('/sign-in')
+      
       dispatch(deleteUserFailure(error.response.data.message))
     }
   }
@@ -92,19 +92,17 @@ const Profile = () => {
   const handleSignOut = async (e) => {
     e.preventDefault()
     try {
-      // dispatch(signOutStart())
+      dispatch(signOutStart())
       const response = await axios.get(signOutUrl, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       })
-      navigate('/sign-in')
-      // dispatch(signOutSuccess(response))
+      
+      dispatch(signOutSuccess(response))
     } catch (error) {
-      if (error.response.status === 401) {
-        navigate('/sign-in')
-      }
+      
     }
   }
   // Firebase storage
@@ -161,7 +159,7 @@ const Profile = () => {
   const handleDeleteListing = async (listingId) => {
     try {
       await axios.delete(
-        `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/delete/${listingId}`,
+        `http://localhost:5000/api/v1/listing/delete/${listingId}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -319,6 +317,11 @@ const Profile = () => {
               </div>
             ))}
           </div>
+        )}
+      {showUserListings &&
+        showUserListings.data &&
+        showUserListings.data.listings && showUserListings.data.listings.length === 0  && (
+        <p className=' font-semibold text-slate-500 text-center'> You currently have no listings. Please create one!</p>
         )}
     </div>
   )

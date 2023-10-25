@@ -1,12 +1,21 @@
 import { FaSearch } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { signOutStart, signOutSuccess } from '../redux/user/userSlice'
+
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user)
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const token = currentUser?.data?.userData?.accessToken;
+
+  const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
+  
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -23,6 +32,24 @@ const Header = () => {
       setSearchTerm(searchTermFromUrl)
     }
   }, [location.search])
+
+  const handleSignOut = async (e) => {
+    e.preventDefault()
+    try {
+      dispatch(signOutStart())
+      const response = await axios.get(signOutUrl, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      
+      dispatch(signOutSuccess(response))
+      navigate('/sign-in')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <header className="bg-slate-200 shadow-md">
@@ -63,13 +90,18 @@ const Header = () => {
             {currentUser ? (
               <img
                 className="rounded-full h-7 w-7"
-                src={currentUser.data.userData.photo}
+                src={currentUser?.data?.userData?.photo}
                 alt="profile"
               />
             ) : (
               <li className="text-slate-700 hover:underline">Sign in</li>
             )}
           </Link>
+          {
+            currentUser && (
+              <li className="text-slate-700 hover:underline cursor-pointer" onClick={handleSignOut}>Sign out</li>
+            )
+          }
         </ul>
       </div>
     </header>

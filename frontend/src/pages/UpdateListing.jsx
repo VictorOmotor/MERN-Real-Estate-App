@@ -30,7 +30,7 @@ const UpdateListing = () => {
   const [uploading, SetUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const createUrl = 'https://mern-real-estate-9wp2.onrender.com/api/v1/listing/create'
+  const createUrl = 'http://localhost:5000/api/v1/listing/create'
   const { currentUser } = useSelector((state) => state.user)
   const token = currentUser.data.userData.accessToken
   const userRef = currentUser.data.userData._id
@@ -132,7 +132,7 @@ const UpdateListing = () => {
     const fetchListing = async () => {
       const listingId = params.listingId
       const response = await axios.get(
-        `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/get/${listingId}`,
+        `http://localhost:5000/api/v1/listing/get/${listingId}`,
       )
       setFormData(response.data.listing)
     }
@@ -149,7 +149,7 @@ const UpdateListing = () => {
       setLoading(true)
       setError(false)
       const response = await axios.put(
-        `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/update/${params.listingId}`,
+        `http://localhost:5000/api/v1/listing/update/${params.listingId}`,
         { ...formData, userRef },
         {
           headers: {

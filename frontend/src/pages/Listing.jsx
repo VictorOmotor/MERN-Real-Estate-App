@@ -32,7 +32,7 @@ const Listing = () => {
       try {
         setLoading(true)
         const response = await axios.get(
-          `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/get/${params.listingId}`,
+          `http://localhost:5000/api/v1/listing/get/${params.listingId}`,
         )
 
         setListing(response.data.listing)
