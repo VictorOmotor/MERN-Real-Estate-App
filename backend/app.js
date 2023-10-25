@@ -39,7 +39,7 @@ app.use('/api/v1/listing', listingRouter)
 app.use(express.static(path.join(__dirname, '/frontend/dist')))
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'front', 'dist', 'index.html'))
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'))
 })
 
 app.use(globalErrorHandler)

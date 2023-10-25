@@ -9,7 +9,7 @@ const SignUp = () => {
   const [loading, setLoading] = useState(null)
   const navigate = useNavigate()
 
-  const url = 'http://localhost:5000/api/v1/user/signup'
+  const url = 'https://mern-real-estate-9wp2.onrender.com/api/v1/user/signup'
 
   const handleChange = async (e) => {
     setFormData({

@@ -31,10 +31,10 @@ const Profile = () => {
   const fileRef = useRef(null)
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
-  const url = `http://localhost:5000/api/v1/user/profile/${currentUser.data.userData._id}`
-  const deleteUrl = `http://localhost:5000/api/v1/user/deleteuser/${currentUser.data.userData._id}`
-  const getListingsUrl = `http://localhost:5000/api/v1/listing/listings/${currentUser.data.userData._id}`
-  const signOutUrl = 'http://localhost:5000/api/v1/user/signout'
+  const url = `https://mern-real-estate-9wp2.onrender.com/api/v1/user/profile/${currentUser.data.userData._id}`
+  const deleteUrl = `https://mern-real-estate-9wp2.onrender.com/api/v1/user/deleteuser/${currentUser.data.userData._id}`
+  const getListingsUrl = `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/listings/${currentUser.data.userData._id}`
+  const signOutUrl = 'https://mern-real-estate-9wp2.onrender.com/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
   const [showUserListings, setShowUserListings] = useState([])
   // const [signOut, setSignOut] = useState(false)
@@ -161,7 +161,7 @@ const Profile = () => {
   const handleDeleteListing = async (listingId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/v1/listing/delete/${listingId}`,
+        `https://mern-real-estate-9wp2.onrender.com/api/v1/listing/delete/${listingId}`,
         {
           headers: {
             'Content-Type': 'application/json',

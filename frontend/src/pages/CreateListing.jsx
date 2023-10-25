@@ -30,7 +30,7 @@ const CreateListing = () => {
   const [uploading, SetUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const createUrl = 'http://localhost:5000/api/v1/listing/create'
+  const createUrl = 'https://mern-real-estate-9wp2.onrender.com/api/v1/listing/create'
   const { currentUser } = useSelector((state) => state.user)
   const token = currentUser.data.userData.accessToken
   const userRef = currentUser.data.userData._id
