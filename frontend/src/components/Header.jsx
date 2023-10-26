@@ -47,7 +47,7 @@ const Header = () => {
       dispatch(signOutSuccess(response))
       navigate('/sign-in')
     } catch (error) {
-      console.log(error)
+      navigate('/sign-in')
     }
   }
 
@@ -99,7 +99,7 @@ const Header = () => {
           </Link>
           {
             currentUser && (
-              <li className="text-slate-700 hover:underline cursor-pointer" onClick={handleSignOut}>Sign out</li>
+              <li className="text-slate-700 font-semibold hover:underline cursor-pointer" onClick={handleSignOut}>Sign out</li>
             )
           }
         </ul>

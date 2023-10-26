@@ -260,7 +260,7 @@ const CreateListing = () => {
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
-              <p>Beds</p>
+              <p>Bedrooms</p>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -274,7 +274,7 @@ const CreateListing = () => {
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
-              <p>Baths</p>
+              <p>Bathrooms</p>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -290,7 +290,7 @@ const CreateListing = () => {
               />
               <div className="flex flex-col items-center">
                 <p>Regular Price</p>
-                <span className="text-xs">($ / month)</span>
+                <span className="text-xs">(₦/month)</span>
               </div>
             </div>
             {formData.offer && (
@@ -308,7 +308,7 @@ const CreateListing = () => {
                 />
                 <div className="flex flex-col items-center">
                   <p>Discounted Price</p>
-                  <span className="text-xs">($ / month)</span>
+                  <span className="text-xs">(₦/month)</span>
                 </div>
               </div>
             )}
@@ -355,7 +355,10 @@ const CreateListing = () => {
                   className="w-20 h-20 object-contain rounded-lg"
                 />
                 <button
-                  onClick={() => handleRemoveImage(index)}
+                  onClick={(e) => {
+                  e.preventDefault(); // Prevent the form submission
+                  handleRemoveImage(index);
+                }}
                   className="p-3 text-red-700
                             rounded-lg uppercase hover:opacity-60"
                 >

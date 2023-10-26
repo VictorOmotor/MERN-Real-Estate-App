@@ -13,7 +13,7 @@ router.post(
 router.get(
   '/listings/:id',
   userAuthMiddleWare,
-  tryCatchHandler(ListingController.getListings),
+  tryCatchHandler(ListingController.getUserListings),
 )
 router.delete(
   '/delete/:id',

@@ -91,7 +91,7 @@ const Listing = () => {
           )}
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
             <p className="text-2xl font-semibold">
-              {listing.name} - ${' '}
+              {listing.name} - ₦
               {listing.offer
                 ? listing.discountPrice.toLocaleString('en-US')
                 : listing.regularPrice.toLocaleString('en-US')}
@@ -107,7 +107,7 @@ const Listing = () => {
             <div className="flex gap-4">
               <p
                 className="bg-red-900 w-full max-w-[100px] text-white
-                text-center p-1 rounded-md items-center"
+                text-center p-1 pt-3 rounded-md items-center"
               >
                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
               </p>
@@ -116,7 +116,7 @@ const Listing = () => {
                   className="bg-green-900 w-full max-w-[100px] text-white
                 text-center p-1 rounded-md items-center"
                 >
-                  ${+listing.regularPrice - +listing.discountPrice} discount
+                  ₦{+listing.regularPrice - +listing.discountPrice} discount
                 </p>
               )}
             </div>
@@ -131,14 +131,14 @@ const Listing = () => {
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaBed className="text-lg" />
                 {listing.bedrooms > 1
-                  ? `${listing.bedrooms} beds `
-                  : `${listing.bedrooms} bed `}
+                  ? `${listing.bedrooms} bedrooms `
+                  : `${listing.bedrooms} bedroom `}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaBath className="text-lg" />
                 {listing.bathrooms > 1
-                  ? `${listing.bathrooms} baths `
-                  : `${listing.bathrooms} bath `}
+                  ? `${listing.bathrooms} bathrooms `
+                  : `${listing.bathrooms} bathroom `}
               </li>
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaParking className="text-lg" />

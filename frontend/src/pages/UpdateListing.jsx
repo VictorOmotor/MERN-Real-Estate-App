@@ -161,15 +161,7 @@ const UpdateListing = () => {
       setLoading(false)
       navigate(`/listing/${response.data.updatedListing._id}`)
     } catch (error) {
-      // if (error.response.status === 401) {
-      //     setLoading(false)
-      //     setError(false)
-      //     navigate('/sign-in')
-      // }
-
-      // setError(error.message)
-      // setLoading(false)
-      console.log(error)
+      
     }
   }
   return (
@@ -273,7 +265,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
-              <p>Beds</p>
+              <p>Bedrooms</p>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -287,7 +279,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
-              <p>Baths</p>
+              <p>Bathrooms</p>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -303,7 +295,7 @@ const UpdateListing = () => {
               />
               <div className="flex flex-col items-center">
                 <p>Regular Price</p>
-                <span className="text-xs">($ / month)</span>
+                <span className="text-xs">(₦/month)</span>
               </div>
             </div>
             {formData.offer && (
@@ -321,7 +313,7 @@ const UpdateListing = () => {
                 />
                 <div className="flex flex-col items-center">
                   <p>Discounted Price</p>
-                  <span className="text-xs">($ / month)</span>
+                  <span className="text-xs">(₦/month)</span>
                 </div>
               </div>
             )}

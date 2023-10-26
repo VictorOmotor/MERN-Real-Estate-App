@@ -6,11 +6,13 @@ import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules'
 import 'swiper/css/bundle'
 import ListingItem from '../components/ListingItem'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
   const [offerListings, setOfferListings] = useState([])
   const [saleListings, setSaleListings] = useState([])
   const [rentListings, setRentListings] = useState([])
+  const { currentUser } = useSelector((state) => state.user)
 
   SwiperCore.use([Navigation])
   useEffect(() => {
@@ -57,13 +59,16 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex flex-col gap-6 py-28 px-3">
-        <h1 className="text-slate-700 font-bold text-3xl lg:text-6xl">
-          Find your next <span className="text-slate-500">perfect</span>
+      <div className="flex flex-col gap-6 py-5 px-3 lg:py-20">
+        {currentUser && (
+          <h1 className='font-bold text-3xl mb-1 lg:text-5xl lg:mb-10'>Hello <span className="text-slate-500" >{ currentUser.data.userData.username},</span></h1>
+        )}
+        <h1 className="text-slate-700 font-bold text-2xl lg:text-6xl">
+          Let's help you find your next <span className="text-slate-500">perfect</span>
           <br />
           apartment with ease
         </h1>
-        <div className="text-gray-400 text-xs sm:text-sm">
+        <div className="text-gray-400 text-xs sm:text-xl">
           Platinum Estate offers the best and most affordable homes anywhere in
           Nigeria.
           <br />
@@ -71,7 +76,7 @@ const Home = () => {
         </div>
         <Link
           to={'/search'}
-          className="text-xs sm:text-sm
+          className="text-xs sm:text-xl
         text-blue-800 font-bold hover:underline"
         >
           Let's get started...
@@ -89,7 +94,7 @@ const Home = () => {
               center no-repeat`,
                   backgroundSize: 'cover',
                 }}
-                className="h-[500px]"
+                className=" h-[300px] lg:h-[500px] "
                 key={listing._id}
               ></div>
             </SwiperSlide>

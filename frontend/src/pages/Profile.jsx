@@ -37,7 +37,6 @@ const Profile = () => {
   const signOutUrl = '/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
   const [showUserListings, setShowUserListings] = useState([])
-  // const [signOut, setSignOut] = useState(false)
   const token = currentUser.data.userData.accessToken
   const userRef = currentUser.data.userData._id
   const navigate = useNavigate()
@@ -102,7 +101,7 @@ const Profile = () => {
       
       dispatch(signOutSuccess(response))
     } catch (error) {
-      
+      navigate('/sign-in')
     }
   }
   // Firebase storage

@@ -11,7 +11,7 @@ const ListingItem = ({ listing }) => {
         <img
           src={listing.imageUrls[0]}
           alt="listing-cover"
-          className="h-[320px] sm:h-[220px] w-full object-cove
+          className="h-[220px] sm:h-[220px] w-full
               hover:scale-105 transition-scale duration-300"
         />
         <div className="p-3 flex flex-col gap-2 w-full">
@@ -28,22 +28,22 @@ const ListingItem = ({ listing }) => {
             {listing.description}
           </p>
           <p className="text-slate-500 mt-2 font-semibold">
-            $
+            ₦
             {listing.offer
               ? listing.discountPrice.toLocaleString('en-US')
               : listing.regularPrice.toLocaleString('en-US')}
-            {listing.type === 'rent' && ' / month'}
+            {listing.type === 'rent' && '/month'}
           </p>
           <div className="text-slate-700 flex gap-4">
             <div className="font-bold text-xs">
               {listing.bedrooms > 1
-                ? `${listing.bedrooms} beds`
-                : `${listing.bedrooms} bed `}
+                ? `${listing.bedrooms} bedrooms`
+                : `${listing.bedrooms} bedroom `}
             </div>
             <div className="font-bold text-xs">
               {listing.bathrooms > 1
-                ? `${listing.bathrooms} baths`
-                : `${listing.bathrooms} bath `}
+                ? `${listing.bathrooms} bathrooms`
+                : `${listing.bathrooms} bathroom `}
             </div>
           </div>
         </div>

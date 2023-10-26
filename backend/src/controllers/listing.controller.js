@@ -11,7 +11,7 @@ export default class ListingController {
     })
   }
 
-  static async getListings(req, res) {
+  static async getUserListings(req, res) {
     const id = req.params.id
     const userId = req.user._id
     if (id !== userId)

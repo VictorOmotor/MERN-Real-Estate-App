@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://mern-real-estate-9wp2.onrender.com/',
+        target: 'https://mern-real-estate-9wp2.onrender.com',
         secure: false,
       },
     },
