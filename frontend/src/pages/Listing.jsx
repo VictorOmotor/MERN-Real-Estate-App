@@ -25,7 +25,8 @@ const Listing = () => {
   const [copied, setCopied] = useState(false)
   const [contact, setContact] = useState(false)
   const { currentUser } = useSelector((state) => state.user)
-  const token = currentUser.data.userData.accessToken
+
+  
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -161,6 +162,9 @@ const Listing = () => {
                 </button>
               )}
             {contact && <Contact listing={listing} />}
+            {currentUser === null ? (
+              <p className='font-semibold text-slate-700 text-sm animate-pulse'>Please sign in to contact landlord!!!</p>)
+            : ''}
           </div>
         </div>
       )}
