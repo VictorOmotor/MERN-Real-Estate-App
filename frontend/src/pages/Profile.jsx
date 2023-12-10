@@ -31,9 +31,9 @@ const Profile = () => {
   const fileRef = useRef(null)
   const [filePerc, setFilePerc] = useState(0)
   const [fileUploadError, setFileUploadError] = useState(false)
-  const url = `/api/v1/user/profile/${currentUser.data.userData._id}`
-  const deleteUrl = `/api/v1/user/deleteuser/${currentUser.data.userData._id}`
-  const getListingsUrl = `/api/v1/listing/listings/${currentUser.data.userData._id}`
+  const url = `/api/v1/user/profile/${currentUser?.data?.userData?._id}`
+  const deleteUrl = `/api/v1/user/deleteuser/${currentUser?.data?.userData?._id}`
+  const getListingsUrl = `/api/v1/listing/listings/${currentUser?.data?.userData?._id}`
   const signOutUrl = '/api/v1/user/signout'
   const [updateSuccess, SetUpdateSuccess] = useState(false)
   const [showUserListings, setShowUserListings] = useState([])
@@ -187,7 +187,7 @@ const Profile = () => {
       >
         Profile
       </h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col w-3/4 sm:w-full mx-auto gap-4">
         <input
           onChange={(e) => setFile(e.target.files[0])}
           type="file"
@@ -257,7 +257,7 @@ const Profile = () => {
       <p className="text-green-500 mt-4">
         {updateSuccess ? 'Profile updated successfully!' : ''}
       </p>
-      <div className="flex justify-between mt-5">
+      <div className="flex justify-between w-3/4 sm:w-full mx-auto mt-5">
         <span
           onClick={handleDeleteUser}
           className="text-red-700 cursor-pointer"

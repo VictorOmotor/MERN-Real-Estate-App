@@ -42,7 +42,7 @@ const SignIn = () => {
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4 w-3/4 sm:w-full mx-auto" onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
@@ -69,8 +69,9 @@ const SignIn = () => {
         </button>
         <OAuth />
       </form>
-      <p className="text-red-500 mt-4">{error ? error : ''}</p>
-      <div className="flex gap-2 mt-5">
+      <p className="text-red-500 w-3/4 mx-auto sm:mt-4">{error ? error : ''}</p>
+      
+      <div className="flex gap-2 w-3/4 sm:w-full mx-auto sm:mt-5 text-sm sm:text-base">
         <p>Yet to have an account? </p>
         <Link to="/sign-up">
           <span className="text-blue-700">Sign up</span>

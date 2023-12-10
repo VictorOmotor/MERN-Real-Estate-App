@@ -61,7 +61,7 @@ const Home = () => {
     <div>
       <div className="flex flex-col gap-6 py-5 px-3 lg:py-20">
         {currentUser && (
-          <h1 className='font-bold text-3xl mb-1 lg:text-5xl lg:mb-10'>Hello <span className="text-slate-500" >{ currentUser.data.userData.username},</span></h1>
+          <h1 className='font-bold text-3xl mb-1 lg:text-5xl lg:mb-10'>Hello <span className="text-slate-500" >{ currentUser?.data?.userData?.username},</span></h1>
         )}
         <h1 className="text-slate-700 font-bold text-2xl lg:text-6xl">
           Let's help you find your next <span className="text-slate-500">perfect</span>
