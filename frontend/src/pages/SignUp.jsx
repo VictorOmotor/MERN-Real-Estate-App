@@ -78,7 +78,7 @@ const SignUp = () => {
         </button>
         <OAuth />
       </form>
-      <p className="text-red-500 mt-4">{error ? error : ''}</p>
+      <p className="text-red-500 w-3/4 sm:w-full mx-auto sm:mt-4">{error ? error : ''}</p>
       <div className="flex gap-2 w-3/4 sm:w-full mx-auto mt-5">
         <p>Have an account? </p>
         <Link to="/sign-in">

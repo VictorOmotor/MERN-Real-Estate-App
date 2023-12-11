@@ -2,15 +2,9 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState, useRef, useEffect } from 'react'
 import {
-  updateUserStart,
   updateUserSuccess,
-  updateUserFailure,
-  deleteUserStart,
   deleteUserSuccess,
-  deleteUserFailure,
-  signOutStart,
   signOutSuccess,
-  signOutFailure,
 } from '../redux/user/userSlice'
 import {
   getDownloadURL,
@@ -26,7 +20,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({})
   const [file, setFile] = useState(undefined)
   const [showListingsError, setShowListingsError] = useState(false)
-  const { loading, error } = useSelector((state) => state.user)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(null)
   const dispatch = useDispatch()
   const fileRef = useRef(null)
   const [filePerc, setFilePerc] = useState(0)
@@ -51,7 +46,8 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      dispatch(updateUserStart())
+      setError(null)
+      setLoading(true)
       const response = await axios.put(url, formData, {
         headers: {
           'Content-Type': 'application/json',
@@ -60,19 +56,18 @@ const Profile = () => {
       })
 
       dispatch(updateUserSuccess(response))
-      SetUpdateSuccess(true)
+      setLoading(false)
     } catch (error) {
-      if (error.response.status === 401) {
-        navigate('/sign-in')
-      }
-      dispatch(updateUserFailure(error.response.data.message))
+      setLoading(false)
+      setError(error.response.data.message)
     }
   }
 
   const handleDeleteUser = async (e) => {
     e.preventDefault()
     try {
-      dispatch(deleteUserStart())
+      setError(null)
+      setLoading(true)
       const response = await axios.delete(deleteUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -81,27 +76,29 @@ const Profile = () => {
       })
 
       dispatch(deleteUserSuccess(response))
+      setLoading(false)
       
     } catch (error) {
-      
-      dispatch(deleteUserFailure(error.response.data.message))
+      setError(error.response.data.message)
     }
   }
 
   const handleSignOut = async (e) => {
     e.preventDefault()
     try {
-      dispatch(signOutStart())
+      setError(null)
+      setLoading(true)
       const response = await axios.get(signOutUrl, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       })
-      
       dispatch(signOutSuccess(response))
+      setLoading(false)
     } catch (error) {
-      navigate('/sign-in')
+      setLoading(false)
+      console.log(error)
     }
   }
   // Firebase storage
@@ -253,8 +250,8 @@ const Profile = () => {
           Create Listing
         </Link>
       </form>
-      <p className="text-red-500 mt-4">{error ? error : ''}</p>
-      <p className="text-green-500 mt-4">
+      <p className="text-red-500 w-3/4 sm:w-full mx-auto sm:mt-4">{error ? error : ''}</p>
+      <p className="text-green-500 w-3/4 sm:w-full mx-auto sm:mt-4">
         {updateSuccess ? 'Profile updated successfully!' : ''}
       </p>
       <div className="flex justify-between w-3/4 sm:w-full mx-auto mt-5">
@@ -271,7 +268,7 @@ const Profile = () => {
       <button onClick={handleShowListings} className="text-green-700 w-full">
         Show listings
       </button>
-      <p className="text-red-500 mt-4">
+      <p className="text-red-500 w-3/4 sm:w-full mx-auto mt-4">
         {showListingsError ? 'Error showing listings' : ''}
       </p>
       {showUserListings &&

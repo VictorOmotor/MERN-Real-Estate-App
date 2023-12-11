@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { signOutStart, signOutSuccess } from '../redux/user/userSlice'
+import { signOutSuccess } from '../redux/user/userSlice'
 import { RiMenuLine } from 'react-icons/ri';
 import Menu from './Menu'
 
@@ -42,7 +42,6 @@ const Header = () => {
   const handleSignOut = async (e) => {
     e.preventDefault()
     try {
-      dispatch(signOutStart())
       const response = await axios.get(signOutUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +52,7 @@ const Header = () => {
       dispatch(signOutSuccess(response))
       navigate('/sign-in')
     } catch (error) {
-      navigate('/sign-in')
+      console.log(error)
     }
   }
 

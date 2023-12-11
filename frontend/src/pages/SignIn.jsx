@@ -1,19 +1,18 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
-  signInStart,
-  signInSuccess,
-  signInFailure,
+  signInSuccess
 } from '../redux/user/userSlice'
 import OAuth from '../components/OAuth'
 
 const SignIn = () => {
   const [formData, setFormData] = useState({})
-  const { loading, error } = useSelector((state) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(null)
 
   const url = '/api/v1/user/signin'
 
@@ -26,7 +25,8 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      dispatch(signInStart())
+      setError(null)
+      setLoading(true)
       const response = await axios.post(url, formData, {
         headers: {
           'Content-Type': 'application/json',
@@ -34,9 +34,11 @@ const SignIn = () => {
       })
 
       dispatch(signInSuccess(response))
+      setLoading(false)
       navigate('/')
     } catch (error) {
-      dispatch(signInFailure(error.response.data.message))
+      setLoading(false)
+      setError(error.response.data.message)
     }
   }
   return (
@@ -69,7 +71,7 @@ const SignIn = () => {
         </button>
         <OAuth />
       </form>
-      <p className="text-red-500 w-3/4 mx-auto sm:mt-4">{error ? error : ''}</p>
+      <p className="text-red-500 w-3/4 sm:w-full mx-auto sm:mt-4">{error ? error : ''}</p>
       
       <div className="flex gap-2 w-3/4 sm:w-full mx-auto sm:mt-5 text-sm sm:text-base">
         <p>Yet to have an account? </p>

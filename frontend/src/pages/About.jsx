@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div className="py-10 px-4 max-w-6xl mx-auto">
       <h1
-        className="text-3xl font-bold mb-4
+        className="text-2xl sm:text-3xl font-bold mb-4
       text-slate-800"
       >
         About Platinum Estate

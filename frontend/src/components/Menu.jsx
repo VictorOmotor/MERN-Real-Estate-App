@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { signOutStart, signOutSuccess } from '../redux/user/userSlice';
+import { signOutSuccess } from '../redux/user/userSlice';
 import { FaTimes } from 'react-icons/fa';
 
 const Menu = ({ onClick }) => {
@@ -16,7 +16,6 @@ const Menu = ({ onClick }) => {
      const handleSignOut = async (e) => {
     e.preventDefault()
     try {
-      dispatch(signOutStart())
       const response = await axios.get(signOutUrl, {
         headers: {
           'Content-Type': 'application/json',
