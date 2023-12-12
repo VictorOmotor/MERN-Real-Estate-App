@@ -11,7 +11,6 @@ import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import { config } from '../config/index.js'
 import { generateToken } from '../utils/jwt.utils.js'
-
 export default class UserController {
   static async createUser(req, res) {
     const { error } = createUserValidator.validate(req.body)
